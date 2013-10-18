@@ -1,0 +1,120 @@
+
+#include <stdio.h>
+#include <conio.h>
+#include <string.h>
+
+void main()
+{		
+	 char kullanici_adı[20]="kadir";			// Kullanılacak  Degiskenleri tanımlama.
+	 char sifre[10]="1990";
+	 int secim=0,numara=2013;	
+	 float hesap=500,yeni;
+
+	printf("Kulanici Adini Girniz			:");	//Program Calistiginda Ekranda Kulanici Adini Girniz yazar.
+	gets(kullanici_adı);							// 'kullanici_adı'Değişkeni Klavyeden Giriliyor.
+
+	printf("Kulanici Sifresini Giriniz		:");
+	gets(sifre);
+	printf("\n\n");
+
+	if ((strcmp(kullanici_adı,"kadir")==0) && (strcmp(sifre,"1990")==0)) //Dizi Char degişkenini sitring bir ifade olarak döngüde 
+																		//tanımladık eger bu şekide tanımlamasaydık 'kullanici_adı' ve 'sifre' nin
+	{																	//ilk harfinin dogru olması program icin dogru kabul edilecek ve yanlış işlem yapılacaktır,
+
+		printf("	 PAU Bank'a Hosgeldiniz Sayin: ");					
+		puts(kullanici_adı);
+		printf("\n\n");
+		printf("		===========MENU===========\n");					//Kosulu saglaması durumunda yazacak komutlar.
+		printf("		1 - Bakiye               |\n");
+		printf("		2 - Para Ekleme          |\n");
+		printf("		3 - Para Cekme           |\n");
+		printf("		4 - Para Gonderme        |\n");
+		printf("		5 - Cikis		 |\n");
+		printf("\n\n");
+		printf("Yapacaginiz Isleme Gore 1 ile 5 Arasinda Bir Sayi Giriniz  ");
+		scanf("%d",&secim);
+		printf("\n\n");	
+	
+
+			switch(secim)													//switch case döngüsünün başlangıcı.
+			{
+			case 1:
+				printf("Bakiyeniz :%f\n\n", hesap);					//Kılavyeden 1 basıldıgında yazacagı işlem kodları.
+				printf("Cikmak icin Bir Tusa Basiniz...:)");
+				break;
+			case 2:
+
+				printf("Ekliyeceginiz Para Miktarini Giriniz:\n");		//Kılavyeden 2 basıldıgında yazacagı işlem kodları.
+				scanf("%f",&yeni);										//'yeni'Değişkeni Klavyeden Giriliyor.
+				hesap=hesap+yeni;										//matematiksel işlemi yapıyor.
+				printf("Kalan Paraniz %f\n\n",hesap);					//yapılan matematiksel işlemden sonra ekrana hesapta kalan parayı yazıyor.
+				printf("Cikmak icin Bir Tusa Basiniz...:)");
+				break;
+			case 3:
+				printf("Cekeceginz Para Miktarini Giriniz:\n");			//Kılavyeden 3 basıldıgında yazacagı işlem kodları.
+				scanf("%f",&yeni);
+					if (yeni>501)
+						printf("Hesabinizda Girdiginiz Para Miktar Yoktur Tekrar Deneyiniz ");
+					else
+					{
+				hesap=hesap-yeni;
+				printf("Kalan Paraniz %f\n\n",hesap);
+				printf("Cikmak icin Bir Tusa Basiniz...:)");
+				break;
+					
+			case 4:
+				printf("Aktaracaginiz Hesap Nosunu Giriniz:");			//Kılavyeden 4 basıldıgında yazacagı işlem kodları.
+				scanf("%d",&numara);
+				printf("\n\n");
+			
+						if (numara!=2013)
+																				//Koşulu saglaması durumunda ekran cıktısı.
+							printf("Yanlis Bir Hesap Numarasi Girdiniz Tekrar Deneyiniz");
+			
+				
+							else 
+						{
+						printf("Aktaracaginiz Para Miktarini Giriniz:");		// Koşulu Saglamaması durumunda yapacagı işlem kodları.
+						scanf("%f",&yeni);				
+				
+								
+								 if (yeni>501)
+
+								printf("Hesabinizda Girdiginiz Para Miktar Yoktur Tekrar Deneyiniz \n ");
+
+								else
+								{	
+								printf("\n\n");
+								hesap=hesap-yeni;
+								printf("Kalan Paraniz %f\n\n",hesap);
+								printf("Cikmak icin Bir Tusa Basiniz...:)");
+								break;				
+							case 5:
+								printf("Iyi Gunler...:)");
+								break;
+			default:
+				printf("1,2,3,4,5 Disinda Bir Sayi Girdiniz\n");				//1,2,3,4 sayıları dışında birsayını girilmesi sonucu ekran cıktısı
+				printf("Islem Yapmak Icın Programı Tekrar Calistiriniz...");		
+			
+			
+				break;	
+				 }
+			   }
+			 } 
+		   }
+		}		
+
+
+	else
+
+	{
+
+		printf("Yanlis Kulanici Adi Yada Sifre Girdiniz\n");			//Kulanici Adi Yada Sifre yanlış girmemiz sonucu ekran cıktısı.
+
+	}
+
+
+	getche();															//Klavyeden bir tuşa basılmasını bekler.
+
+} 
+
