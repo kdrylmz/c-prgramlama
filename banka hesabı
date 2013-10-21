@@ -8,7 +8,7 @@ void main()
 	 char kullanici_adı[20]="kadir";			// Kullanılacak  Degiskenleri tanımlama.
 	 char sifre[10]="1990";
 	 int secim=0,numara=2013;	
-	 float hesap=500,yeni;
+	 float ak_hesap,cekilen,hesap=500;
 
 	printf("Kulanici Adini Girniz			:");	//Program Calistiginda Ekranda Kulanici Adini Girniz yazar.
 	gets(kullanici_adı);							// 'kullanici_adı'Değişkeni Klavyeden Giriliyor.
@@ -39,25 +39,25 @@ void main()
 			switch(secim)													//switch case döngüsünün başlangıcı.
 			{
 			case 1:
-				printf("Bakiyeniz :%f\n\n", hesap);					//Kılavyeden 1 basıldıgında yazacagı işlem kodları.
+				printf("Bakiak_hesapz :%f\n\n", hesap);					//Kılavyeden 1 basıldıgında yazacagı işlem kodları.
 				printf("Cikmak icin Bir Tusa Basiniz...:)");
 				break;
 			case 2:
 
 				printf("Ekliyeceginiz Para Miktarini Giriniz:\n");		//Kılavyeden 2 basıldıgında yazacagı işlem kodları.
-				scanf("%f",&yeni);										//'yeni'Değişkeni Klavyeden Giriliyor.
-				hesap=hesap+yeni;										//matematiksel işlemi yapıyor.
+				scanf("%f",&ak_hesap);										//'ak_hesap'Değişkeni Klavyeden Giriliyor.
+				hesap=hesap+ak_hesap;										//matematiksel işlemi yapıyor.
 				printf("Kalan Paraniz %f\n\n",hesap);					//yapılan matematiksel işlemden sonra ekrana hesapta kalan parayı yazıyor.
 				printf("Cikmak icin Bir Tusa Basiniz...:)");
 				break;
 			case 3:
 				printf("Cekeceginz Para Miktarini Giriniz:\n");			//Kılavyeden 3 basıldıgında yazacagı işlem kodları.
-				scanf("%f",&yeni);
-					if (yeni>501)
+				scanf("%f",&cekilen);
+					if (cekilen>hesap)
 						printf("Hesabinizda Girdiginiz Para Miktar Yoktur Tekrar Deneyiniz ");
 					else
 					{
-				hesap=hesap-yeni;
+				hesap=hesap-cekilen;
 				printf("Kalan Paraniz %f\n\n",hesap);
 				printf("Cikmak icin Bir Tusa Basiniz...:)");
 				break;
@@ -75,17 +75,17 @@ void main()
 							else 
 						{
 						printf("Aktaracaginiz Para Miktarini Giriniz:");		// Koşulu Saglamaması durumunda yapacagı işlem kodları.
-						scanf("%f",&yeni);				
+						scanf("%f",&ak_hesap);				
 				
 								
-								 if (yeni>501)
+								 if (ak_hesap>hesap)
 
 								printf("Hesabinizda Girdiginiz Para Miktar Yoktur Tekrar Deneyiniz \n ");
 
 								else
 								{	
 								printf("\n\n");
-								hesap=hesap-yeni;
+								hesap=hesap-ak_hesap;
 								printf("Kalan Paraniz %f\n\n",hesap);
 								printf("Cikmak icin Bir Tusa Basiniz...:)");
 								break;				
