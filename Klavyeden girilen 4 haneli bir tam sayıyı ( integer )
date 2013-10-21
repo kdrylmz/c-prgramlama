@@ -4,36 +4,36 @@
 
 void main()
 {
-	int sayi,birler,onlar,yuzler,binler;					  // Kullanılacak  Degiskenleri tanımlama.
-		printf("Dort haneli bir rakam giriniz		:");		  //  Program Calistiginda Ekranda Dort haneli bir rakam Girniz yazar.
-		scanf("%d",&sayi);									  // 'sayi'Değişkeni Klavyeden Giriliyor.
+	int sayi,birler,onlar,yuzler,binler;					  						// Kullanılacak  Degiskenleri tanımlama.
+		printf("Dort haneli bir rakam giriniz		:");		  						//  Program Calistiginda Ekranda Dort haneli bir rakam Girniz yazar.
+		scanf("%d",&sayi);												// 'sayi'DeğişkeniKlavyeden Giriliyor.
 
 		if (sayi<=999)										  
-			{												  // 'sayi' degişkeninin 999 sayisinden kücük ve eşit olması sonucu ekran cıktısı.
+			{												  	//'sayi' degişkeninin 999 sayisinden kücük ve eşit olması sonucu ekran cıktısı.
 			printf("Kucuk Bir Sayi Giridiniz\n");
 			printf("Programi Yeniden Calistirin ...");
 			}
-		 else if(sayi>=9999)								  // 'sayi' degişkeninin 9999 sayisinden büyük ve eşit olması sonucu ekran cıktısı.
+		 else if(sayi>=9999)								  			 // 'sayi' degişkeninin 9999 sayisinden büyük ve eşit olması sonucu ekran cıktısı.
 			{
 			 printf("Buyuk Bir Sayi Giridiniz\n");
 			 printf("Programi Yeniden Calistirin ...");
 			}
 		 else
-			{												  //İki koşuluda saglamaması durumda yapalacak işlemler
+			{												 //İki koşuluda saglamaması durumda yapalacak işlemler
 			 printf("\n\n\n");
 			 printf("	######Sayi Basamaklari######");
 			 printf("\n\n");
-			 binler=sayi/1000;										//binler basmagını bulmak icin yapılan işlem
+			 binler=sayi/1000;										             //binler basmagını bulmak icin yapılan işlem
 				 printf("	Binler basamagi		:%2d\n", binler);
-			 yuzler=(sayi-binler*1000)/100;							//yuzler basmagını bulmak icin yapılan işlem
+			yuzler=(sayi%1000)/100;							        			//yuzler basmagınıbulmak icin yapılan işlem
 				 printf("	Yuzler basamagi		:%2d\n", yuzler);
-			 onlar=(sayi-(binler*1000+yuzler*100))/10;				 //onlar basmagını bulmak icin yapılan işlem
+			 onlar=((sayi%1000)%100)/10;				 					//onlar basmagını bulmak icin yapılan işlem
 				 printf("	Onlar  basamagi		:%2d\n", onlar);
-			 birler=sayi-(binler*1000+yuzler*100+onlar*10);			 //birler basmagını bulmak icin yapılan işlem
+			 birler=((sayi%1000)%100)%10;									 //birler basmagını bulmak icin yapılan işlem
 				 printf("	Birler basamagi		:%2d\n", birler);
 				 printf("\n\n");
 				 printf("	Cikmak icin Bir Tusa Basiniz...)");
 			}
-		 getch();													//Klavyeden bir tuşa basılmasını bekler.													
+		 getch();												                            //Klavyeden bir tuşa basılmasını bekler.													
 			
 	}
