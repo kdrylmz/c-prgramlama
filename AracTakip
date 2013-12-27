@@ -1,0 +1,1572 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <string.h>
+#include <Windows.h>
+
+struct ikamet
+{	
+	char il[20];
+	char mahalle[20];
+	char sokak[20];
+	char no[5];
+};//adres degiskenlerini tanýmlama
+struct sahipler
+{
+	char tcno[12];
+	char plakano[12];
+	char tarih[11];
+}sahipolanlar[BUFSIZ],sahipolanlar1;//sahip degiskenlerini tanýmlama
+struct  kisiler  //kiþileri burada tanýmlama
+{
+	char TC[12];
+	char Ad[24];
+	char SoyAd[24];
+	char Tel[12];
+	char Eposta;
+	struct ikamet adres1;
+	struct ikamet adres;
+	 
+}kisi,kisi1[BUFSIZ];//kisi degiskenlerini tanýmlama
+struct AracKayýt
+{	
+	char PlakaNo[10];
+	char Marka[25];
+	char Model[4],MotorHacmi[4],aracturu[10],YakýtTürü[10];
+
+}arac,arac1[BUFSIZ];//arac degiskenlerini tanýmlama
+struct aracyakit
+{
+char id[2];
+char yakit[10];
+
+}yakitli,yakitli1[BUFSIZ];//arac yakit degiskenlerini tanýmlama
+struct aracturu
+{
+	char id[2];
+	char aractu[30];
+
+}aracturu1,aracturu2[BUFSIZ];//arac turu degiskenlerini tanýmlama
+struct sifreler
+{
+char kulaniciadi[15];
+char sifre[15];
+}parol,parol1,parola1[BUFSIZ];
+
+int anamenu();//anamenu fonksiyonu tanýmlama
+int kisimenu();//kisi menu fonksiyonu tanýmlama
+int kisiguncelmenu();//kisi gunceleme menusu fonksiyonu tanýmlama
+int aracmenu();//arac menu fonksiyonu tanýmlama
+int aracguncelmenu();//arac gunceleme menusu fonksiyonu tanýmlama
+int sahipmenu();//sahip menusu fonksiyonu tanýmlama
+int sahipgunmenu();//sahip gunceleme menusu fonksiyonu tanýmlama
+void parola();//sifreleme fonksiyonunu tanýmlama
+void parolaekle();
+void kisiekle();//kisi ekleme fonksiyonu tanýmlama
+void kisigoruntule();//kisi listelem fonksiyonu tanýmlama
+void kisisil();//kisi silme fonksiyonu tanýmlama
+void kisiguncelle();//kisi guncelleme fonksiyonu tanýmlama
+void kisisahipsil(char tcno[11]);//kisilerden sildigimiz birini sahipler dosyasýnda kayýlý bir veri varsa  bu verileri silme fonksiyonu  tanýmlama
+void kisiguncellikaydet(struct kisiler kisi2[BUFSIZ], int i);//guncelellenen verileri txt ye yazma fonksiyonu tanýmlama
+void aracekle();//arac ekle fonkiyonu tanýmlama
+void aracyakit();//aracyakit ekleme fonksiyonu tanýmlama
+void aractur();//arac turu ekleme fonksiyonu tanýmlama
+void aracsil();//arac silme fonksiyonu tanýmlama
+void aracsahipsil(char plakano[BUFSIZ]);//araclardan sildigimiz bir aracý sahipler dosyasýnda kayýlý bir veri varsa  bu verileri silme fonksiyonu  tanýmlama
+void aracgoruntule();//arac listeleme fonksiyonu tanýmlama
+void aracguncelle();//arac guncelleme fonksiyonu tanýmlama
+void aracguncellikaydet(struct AracKayýt arac2[BUFSIZ], int i);//guncelellenen verileri txt ye yazma fonksiyonu tanýmlama
+void sahipekle();//sahip ekle fonksiyonu tanýmlama
+void sahipgoruntule();//sahip listelem fonksiyonu tanýmlama
+void sahipsil();//sahip silme fonksiyonu tanýmlama
+void sahipguncelle();//sahi gunceleme fonksiyonu tanýmlama
+void sahipguncellikaydet(struct sahipler sahpi2[BUFSIZ], int i);//guncelellenen verileri txt ye yazma fonksiyonu tanýmlama
+bool arackontrol(char plakano[]);//bu fonksiyon araclar dosyasýndaki veriler okuyup sahiplere veri ekleriken kosul saglayan verini olup olmadýgýný koturol ediyor 
+bool kisikontrol(char tcno[]);//bu fonksiyon kisiler dosyasýndaki veriler okuyup sahiplere veri ekleriken kosul saglayan verini olup olmadýgýný koturol ediyor 
+void giris();
+
+void main()
+{
+int sec1, sec2, sec3;
+	giris();
+	parola();
+	printf("\n\n\t\t\tGiris Basarili \n\t\t\tDevam etmek icin bir tusa basiniz:)");
+	getch();
+	for(;;)
+	{
+		
+		system("CLS");
+		sec1=anamenu();
+		if(sec1==1)
+		{
+			for(;;)
+			{
+				system("CLS");
+				sec2=kisimenu();
+				if(sec2==1)
+				{
+					kisiekle();
+				}
+				else if(sec2==2)
+				{
+					kisisil();
+				}
+				else if(sec2==3)
+				{
+					kisigoruntule();
+				}
+				else if(sec2==4)
+				{
+					kisiguncelle();
+				}
+				else if(sec2==5)
+				{
+					break;
+				}
+				else
+				{
+					printf("Hatali Bir Secenek Sectiniz!!!\n");
+					printf("Devam Etmek Icin Bir Tusa Basiniz!!!\n");
+					getch();
+				}
+			}
+		}
+		else if(sec1==2)
+
+		{
+			for(;;)
+			{
+				system("CLS");
+				sec2=aracmenu();
+				if(sec2==1)
+				{
+					aracekle();
+				}
+				else if(sec2==2)
+				{
+					aracsil();
+				}
+				else if(sec2==3)
+				{
+					aracgoruntule();
+				}
+				else if(sec2==4)
+				{
+					aracguncelle();
+				}
+				else if(sec2==5)
+				{
+					break;
+				}
+				
+				else
+				{
+					printf("Hatali Bir Secenek Sectiniz!!!\n");
+					printf("Devam Etmek Icin Bir Tusa Basiniz!!!\n");
+					getch();
+				}
+			}
+		}
+		else if(sec1==3)
+		{
+			
+			for(;;)
+			{
+				system("CLS");
+				sec2=sahipmenu();
+				if(sec2==1)
+				{
+					sahipekle();
+				}
+				else if(sec2==2)
+				{
+					sahipsil();
+				}
+				else if(sec2==3)
+				{
+					sahipgoruntule();
+				}
+				else if(sec2==4)
+				{
+					sahipguncelle();
+				}
+				else if(sec2==5)
+				{
+					break;
+				}
+				else
+				{
+					printf("Hatali Bir Secenek Sectiniz!!!\n");
+					printf("Devam Etmek Icin Bir Tusa Basiniz!!!\n");
+					getch();
+				}
+			}
+		}
+		else if(sec1==4)
+		{
+			parolaekle();
+		}
+				
+		else if(sec1==5)
+		{
+			break;
+		}
+		else
+		{
+			printf("Hatali Bir Secenek Sectiniz!!!\n");
+			printf("Devam Etmek Icin Bir Tusa Basiniz!!!\n");
+			getch();
+		}
+	}
+
+
+}
+int anamenu()//anamenu fonksiyonu
+{
+int sec=0;
+printf("\t\tLutfen yapmak istediginiz islemi seciniz\n\n");
+printf("\n\t\t\t1-Kisi  islemleri\n\t\t\t2-Arac  islemleri\n\t\t\t3-Sahip islemleri\n\t\t\t4-Giris islemleri\n\t\t\t5-Programdan Cikis\n");
+scanf("%d",&sec);
+return sec;
+}
+int kisimenu()//kisi menu fonksiyonu
+{
+int sec=0;
+printf("\t\tLutfen yapmak istediginiz islemi seciniz\n");
+printf("\n\t\t\t1-Kisi Ekle\n\t\t\t2-Kisi sil\n\t\t\t3-Kisileri Listele\n\t\t\t4-Kisi guncele\n\t\t\t5-Ana menu\n");
+scanf("%d",&sec);
+return sec;
+}
+int kisiguncelmenu()//kisi gunceleme menusu fonksiyonu
+{
+int sec=0;
+printf("\t\tLutfen yapmak istediginiz islemi seciniz\n");
+printf("\n\t\t\t1-TC numarasini Guncele \n\t\t\t2-Ismi Guncele\n\t\t\t3-Soyismi Guncele\n\t\t\t4-Telefon Guncele\n\t\t\t5-Adresi Guncele\n\t\t\t6-Kisi Menu\n");
+scanf("%d",&sec);
+return sec;
+
+}
+int aracmenu()//arac menu fonksiyonu
+{
+int sec=0;
+printf("\t\tLutfen yapmak istediginiz islemi seciniz\n");
+printf("\n\t\t\t1-Arac Ekle\n\t\t\t2-Arac sil\n\t\t\t3-Araclari Listele\n\t\t\t4-Arac guncele\n\t\t\t5-Ana menu\n");
+scanf("%d",&sec);
+return sec;
+
+}
+int aracguncelmenu()//arac gunceleme menusu fonksiyonu
+{
+int sec=0;
+printf("\t\tLutfen yapmak istediginiz islemi seciniz\n");
+printf("\n\t\t\t1-Plaka Guncele \n\t\t\t2-Model Guncele\n\t\t\t3-Model Guncele\n\t\t\t4-Motor Hacmi Guncele\n\t\t\t5-Yakit Turu Guncele\n\t\t\t6-Arac Turu Guncele\n\t\t\t7-Kisi Menu\n");
+scanf("%d",&sec);
+return sec;
+}
+int sahipmenu()//sahip menusu fonksiyonu
+{
+int sec=0;
+printf("\t\tLutfen yapmak istediginiz islemi seciniz\n");
+printf("\n\t\t\t1-Sahip Ekle\n\t\t\t2-Sahip sil\n\t\t\t3-Sahipleri Listele\n\t\t\t4-Sahip guncele\n\t\t\t5-Sahipleri Listele");
+scanf("%d",&sec);
+return sec;
+
+}
+int sahipgunmenu()//sahip gunceleme menusu fonksiyonu
+{
+int sec=0;
+printf("\t\tLutfen yapmak istediginiz islemi seciniz\n");
+printf("\n\t\t\t1-TC numarasini Guncele \n\t\t\t2-Plaka numarasini Guncele\n\t\t\t3-Tarihi Guncele\n\t\t\t4-Sahip menu\n");
+scanf("%d",&sec);
+return sec;
+
+
+}
+void parola()
+{
+	for(;;)
+		{
+	int n=0,a=0;
+	int sec=0;
+	FILE*dosya;
+	printf("\t\t\t***********MENU***********\n\n");
+	printf("\t\t\tKullanici Adinizi Giriniz:");
+	scanf("%s",parol1.kulaniciadi);
+	printf("\t\t\tKullanici Sifrenizi Giriniz:");
+	scanf("%s",parol1.sifre);
+	dosya=fopen("parola.txt","r");
+	if(dosya==NULL)
+		printf("File Not Found!!");
+	else
+	{
+		
+		while(fscanf(dosya,"%s\t\t%s\n",parola1[n].kulaniciadi,parola1[n].sifre)!=EOF)
+			{
+				
+			
+					if((strcmp(parol1.kulaniciadi,parola1[n].kulaniciadi)==0) && (strcmp(parol1.sifre,parola1[n].sifre)==0))
+					{
+						
+					
+						a++;
+						
+					}
+				
+				n++;
+			}
+		
+
+		if(a==0)
+		{
+			printf("Kullanici Adiniz Veya Kullanici Sifreniz Hatalý!!!");
+			getch();
+			system("CLS");
+			giris();
+		}
+		else if(a!=0)
+			break;
+		fclose(dosya);
+	}
+	}
+	}
+void parolaekle()
+{
+		FILE *dosya;
+	char secenek=' ';
+	dosya=fopen("parola.txt","a");
+	if(dosya==NULL)
+		printf("File Not Found!!");
+	else
+	{
+		do{
+			system("CLS");
+		
+		
+		printf("Kulanici Adi Giriniz:");
+		scanf("%s/n",parol1.kulaniciadi);
+		printf("Sifreniz Giriniz:");
+		scanf("%s/n",parol1.sifre);
+
+		fprintf(dosya,"%s\t\t%s\n",parol.kulaniciadi,parol.sifre);
+
+		printf("Yeni kayit icin 'E' basin veya menuye donmek icin herhangi bir tusa basin\n");
+		secenek=getch();
+				}
+		while(secenek=='e' || secenek=='E');
+		{
+			fclose(dosya);	
+			
+
+		}
+	}
+
+}
+void kisiekle()//kisi ekleme fonksiyonu
+{
+	FILE *dosya;
+	char secenek=' ';
+	dosya=fopen("kisiler.txt","a");
+	if(dosya==NULL)
+		printf("File Not Found!!");
+	else
+	{
+		do{
+			system("CLS");
+		printf("Eklemek Istediginiz Kisinin TC No Giriniz:");
+		scanf("%s/n",&kisi.TC);
+		printf("Eklemek Istediginiz Kisinin Ismini Giriniz:");
+		scanf("%s/n",&kisi.Ad);
+		printf("Eklemek Istediginiz Kisinin Soyismi Giriniz:");
+		scanf("%s/n",&kisi.SoyAd);
+		printf("Eklemek Istediginiz Kisinin Telefon Numarasini Giriniz:"); 
+		scanf("%s/n",&kisi.Tel);
+		printf("Eklemek Istediginiz Kisinin E-posta Numarasini Giriniz:"); 
+		scanf("%s/n",&kisi.Eposta);
+		printf("Eklemek Istediginiz Kisinin Ikamet Ettigi Sehir Giriniz:");
+		scanf("%s/n",&kisi.adres.il);
+		printf("Eklemek Istediginiz Kisinin Ikamet Ettigi Mahalleyi Giriniz:");
+		scanf("%s/n",&kisi.adres.mahalle);
+		printf("Eklemek Istediginiz Kisinin Ikamet Ettigi Sokak Giriniz:");
+		scanf("%s/n",&kisi.adres.sokak);
+		printf("Eklemek Istediginiz Kisinin Ikamet Ettigi No Giriniz:");
+		scanf("%s/n",&kisi.adres.no);
+		fprintf(dosya,"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",kisi.TC,kisi.Ad,kisi.SoyAd,kisi.Tel,kisi.adres.il,kisi.adres.mahalle,kisi.adres.sokak,kisi.adres.no);
+		
+		printf("yeni kayit için 'E' basin veya menüye dönmek için herhangi bir tusa basin\n");
+		secenek=getch();
+				}
+		while(secenek=='e' || secenek=='E');
+		{
+
+			fclose(dosya);	
+		}
+	}
+}
+void kisigoruntule()//kisi listelem fonksiyonu
+{
+	int n=0;
+	FILE *dosya;
+	dosya=fopen("kisiler.txt","r");
+	system("CLS");
+	
+		if(dosya==NULL)
+			printf("File Not Found!!");
+		else
+		{		
+			while(fscanf(dosya,"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",kisi1[n].TC,kisi1[n].Ad,kisi1[n].SoyAd,kisi1[n].Tel,kisi1[n].adres1.il,kisi1[n].adres1.mahalle,kisi1[n].adres1.sokak,kisi1[n].adres1.no)!=EOF)
+			{
+				
+				printf("TC kimikli No: %s\n",kisi1[n].TC );
+				printf("Ismi Soyismi: %s %2s\n",kisi1[n].Ad,kisi1[n].SoyAd );
+				printf("Telefon Numarasi :%s\n",kisi1[n].Tel );
+				printf("Adresi=:Sehir: %s\t\t Mahalle: %s\t Sokak: %s\t no: %s",kisi1[n].adres1.il,kisi1[n].adres1.mahalle,kisi1[n].adres1.sokak,kisi1[n].adres1.no );
+			
+				printf("\n***************************************************\n\n" );
+		
+				n++;
+			}
+
+		}
+	if(n ==0)
+	{
+		printf("Kayit Bulunmamaktadir!!!\n");
+	}
+	printf("%d\n",n);
+	printf("Devam etmek icin bir tusa basiniz\n");
+	getch();
+	fclose(dosya);
+}
+void kisisil()//kisi silme fonksiyonu
+{
+	int n=0,i=0;
+	FILE *dosya;
+	dosya=fopen("kisiler.txt","r");
+	system("CLS");
+if(dosya==NULL)
+		printf("File Not Found!!");
+else
+{
+	while(fscanf(dosya,"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",kisi1[n].TC,kisi1[n].Ad,kisi1[n].SoyAd,kisi1[n].Tel,kisi1[n].adres.il,kisi1[n].adres1.mahalle,kisi1[n].adres1.sokak,kisi1[n].adres1.no)!=EOF)
+{
+n++;
+}
+fclose(dosya);
+
+}
+char tcno[11];
+	printf("Silmek istediginiz kisinin TC numarasini giriniz:");
+	scanf("%s",&tcno);
+	kisisahipsil(tcno);
+			FILE *file;
+			
+				file=fopen("kisiler.txt","w");
+				
+				if(file == NULL)
+				{
+					printf("File Not Found\n");
+				}
+	for(i=0;i<=n;i++)
+	{
+		
+		if(strcmp(kisi1[i].TC,tcno)==0)
+		{
+
+			continue;
+		}
+		else
+		{
+			fprintf(dosya,"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",kisi1[i].TC,kisi1[i].Ad,kisi1[i].SoyAd,kisi1[i].Tel,kisi1[i].adres.il,kisi1[i].adres1.mahalle,kisi1[i].adres1.sokak,kisi1[i].adres1.no);
+		}	
+		
+	}
+	fclose(file);
+	
+	printf("Kayit silme islemi basariyla tamamlanmistir!!!\nDevam etmek icin bir tusa basiniz!!!");
+	getch();
+	
+}
+void kisiguncelle()//kisi guncelleme fonksiyonu
+{
+
+	int n=0,sayac=0,sec=0,a=0;
+FILE *dosya;
+dosya=fopen("kisiler.txt","r");
+if(dosya ==NULL)
+		printf("File Not Found!!");
+else
+{
+	while(fscanf(dosya,"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",kisi1[n].TC,kisi1[n].Ad,kisi1[n].SoyAd,kisi1[n].Tel,kisi1[n].adres.il,kisi1[n].adres.mahalle,kisi1[n].adres.sokak,kisi1[n].adres.no)!=EOF)
+{
+n++;
+}
+fclose(dosya);
+}
+
+for(;;)
+{
+	system("CLS"); 
+	sec=kisiguncelmenu();
+	system("CLS"); 
+
+if(sec==1)
+{
+char tcno[11];
+			printf("Degistirmek istediginiz kisinin TC numarasini giriniz:");
+			scanf("%s",&tcno);
+			for(int j=0;j<=n;j++)
+			{
+				if(strcmp(tcno,kisi1[j].TC)==0)
+				{
+					printf("Yeni TC numarasini giriniz:");
+					scanf("%s",&kisi1[j].TC);
+					printf("TC =%s\n",kisi1[j].TC);
+					a++;
+					kisiguncellikaydet(kisi1, n);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+					
+}
+else if(sec==2)
+{
+char tcno[11];
+			printf("Degistirmek istediginiz kisinin TC numarasini giriniz:");
+			scanf("%s",&tcno);
+			for(int j=0;j<=n;j++)
+			{
+				if(strcmp(tcno,kisi1[j].TC)==0)
+				{
+					printf("Yeni ismi giriniz:");
+					scanf("%s",&kisi1[j].Ad);
+					printf("Adi=%s\n",kisi1[j].Ad);
+					a++;
+					kisiguncellikaydet(kisi1, n);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+				
+}
+else if(sec==3)
+{
+char tcno[11];
+			printf("Degistirmek istediginiz kisinin TC numarasini giriniz:");
+			scanf("%s",&tcno);
+			for(int j=0;j<=n;j++)
+			{
+				if(strcmp(tcno,kisi1[j].TC)==0)
+				{
+					printf("Yeni Soyismi giriniz:");
+					scanf("%s",&kisi1[j].SoyAd);
+					printf("Soyisim=%s\n",kisi1[j].SoyAd);
+					a++;
+					kisiguncellikaydet(kisi1, n);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+				
+}
+else if(sec==4)
+{
+char tcno[11];
+			printf("Degistirmek istediginiz kisinin TC numarasini giriniz:");
+			scanf("%s",&tcno);
+			for(int j=0;j<=n;j++)
+			{
+				if(strcmp(tcno,kisi1[j].TC)==0)
+				{
+					printf("Yeni telefon numarasini giriniz:");
+					scanf("%s",&kisi1[j].Tel);
+					printf("Telefon=%s\n",kisi1[j].Tel);
+					a++;
+					kisiguncellikaydet(kisi1, n);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+				
+}
+else if(sec==5)
+{
+char tcno[11];
+			printf("Degistirmek istediginiz kisinin TC numarasini giriniz:");
+			scanf("%s",&tcno);
+			for(int j=0;j<=n;j++)
+			{
+				if(strcmp(tcno,kisi1[j].TC)==0)
+				{
+					scanf("%s",&kisi1[n].adres.mahalle);
+					printf("Mahalle=%s\n",kisi1[n].adres.mahalle);
+					printf("Yeni sokagi giriniz:");
+					scanf("%s",&kisi1[n].adres.sokak);
+					printf("Sokak=%s\n",kisi1[n].adres.sokak);
+					printf("Yeni noyu giriniz:");
+					scanf("%s",&kisi1[n].adres.no);
+					printf("No=%s\n",kisi1[n].adres.no);
+					printf("Yeni ili giriniz:");
+					scanf("%s",&kisi1[n].adres.il);
+					printf("Il=%s\n",kisi1[n].adres.il);
+					a++;
+					kisiguncellikaydet(kisi1, n);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+					
+}
+else if(sec==6)
+		{
+			printf("Kisi Menusune Dondunuz!!!");
+			break;
+		}
+else
+{
+			printf("Hatali bir secim yaptiniz!!!\nDevam etmek icin bir tusa basiniz\n");
+			getch();
+}
+
+}
+}
+void kisiguncellikaydet(struct kisiler kisi2[BUFSIZ], int i)//guncelellenen verileri txt ye yazma fonksiyonu
+{
+	FILE *dosya;
+	dosya=fopen("kisiler.txt","w");
+	if(dosya ==NULL)
+		printf("File Not Found!!");
+	else
+	{
+		for(int j=0;j<i;j++)
+		{
+			fprintf(dosya,"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",kisi2[j].TC,kisi2[j].Ad,kisi2[j].SoyAd,kisi2[j].Tel,kisi2[j].adres.il,kisi2[j].adres.mahalle,kisi2[j].adres.sokak,kisi2[j].adres.no);
+			
+		}
+		fclose(dosya);
+	}
+
+}
+void aracekle()//arac ekle fonkiyonu
+{
+	FILE *dosya;
+	char secenek=' ';
+	dosya=fopen("araclar.txt","a");
+	if(dosya==NULL)
+		printf("File Not Found!!");
+	else
+	{
+		do{
+			system("CLS");
+		
+		
+		printf("Eklemek Istediginiz  Arac Markasini Giriniz");
+		 flushall();
+		scanf("%s/n",&arac.Marka);
+		printf("Eklemek Istediginiz  Arac Model Giriniz");
+		 flushall();
+		scanf("%s/n",&arac.Model);
+		printf("Eklemek Istediginiz  Arac plaka Numarasý Giriniz");
+		 flushall();
+		scanf("%s/n",&arac.PlakaNo);
+		printf("Eklemek Istediginiz  Arac motor hacmi Giriniz");
+		 flushall();
+		scanf("%s/n",&arac.MotorHacmi);
+		printf("Eklemek Istediginiz  Arac yakit turunu Seciniz\n1-Benzinli\n2-Dizel\n3-LPG\n4-Elektrikli\n5-Hibrid\n");	
+		 flushall();
+		scanf("%s/n",&arac.YakýtTürü);		
+		printf("Eklemek Istediginiz  Arac turunu Seciniz\n1-Otomobil\n2-Motorsiklet\n3-Ticari\n4-Hafif Ticari\n");
+		 flushall();
+		scanf("%s/n",&arac.aracturu);
+		fprintf(dosya,"%s\t%s\t%s\t%s\t%s\t%s\n",arac.Marka,arac.Model,arac.PlakaNo,arac.MotorHacmi,arac.YakýtTürü,arac.aracturu);
+
+		printf("yeni kayit için e basin veya menüye dönmek için herhangi bir tusa basin\n");
+		secenek=getch();
+				}
+		while(secenek=='e' || secenek=='E');
+		{
+			fclose(dosya);	
+		}
+	}
+}
+void aracyakit()//aracyakit ekleme fonksiyonu
+{
+	FILE *dosya;
+	char secenek=' ';
+	dosya=fopen("yakitturu.txt","a");
+	if(dosya==NULL)
+		printf("File Not Found!!");
+	else
+	{
+		do{
+			system("CLS");
+		
+		
+		printf("Eklemek Istediginiz  Yakit numarasini Giriniz");
+		scanf("%s/n",yakitli.id);
+		printf("Eklemek Istediginiz  Yakit Turunu Giriniz");
+		scanf("%s/n",yakitli.yakit);
+
+		fprintf(dosya,"%s\t\t%s\n",yakitli.id,yakitli.yakit);
+
+		printf("yeni kayit için e basin veya menüye donmek için herhangi bir tusa basin\n");
+		secenek=getch();
+				}
+		while(secenek=='e' || secenek=='E');
+		{
+			fclose(dosya);	
+		}
+	}
+}
+void aractur()//arac turu ekleme fonksiyonu
+{
+	FILE *dosya;
+	char secenek=' ';
+	dosya=fopen("aracturu.txt","a");
+	if(dosya==NULL)
+		printf("File Not Found!!");
+	else
+	{
+		do{
+			system("CLS");
+		
+		
+		printf("Eklemek Istediginiz  Kayit numarasini Giriniz");
+		scanf("%s/n",aracturu1.id);
+		printf("Eklemek Istediginiz  Arac Turunu Giriniz");
+		scanf("%s/n",aracturu1.aractu);
+
+		fprintf(dosya,"%s\t\t%s\n",aracturu1.id,aracturu1.aractu);
+
+		printf("yeni kayit için e basin veya menüye donmek için herhangi bir tusa basin\n");
+		secenek=getch();
+				}
+		while(secenek=='e' || secenek=='E');
+		{
+			fclose(dosya);	
+		}
+	}
+
+
+}
+void aracsil()//arac silme fonksiyonu
+{
+	int nn=0;
+	FILE *dosya;
+	dosya=fopen("araclar.txt","r");
+	system("CLS");
+if(dosya==NULL)
+		printf("File Not Found!!");
+else
+{
+	while(fscanf(dosya,"%s\t%s\t%s\t%s\t%s\t%s\n",arac1[nn].Marka,arac1[nn].Model,arac1[nn].PlakaNo,arac1[nn].MotorHacmi,arac1[nn].YakýtTürü,arac1[nn].aracturu)!=EOF)
+{
+nn++;
+}
+fclose(dosya);
+
+}
+char plakano[BUFSIZ];
+	printf("Silmek istediginiz plaka numarasini giriniz:");
+	scanf("%s",&plakano);
+			FILE *file;
+			
+				file=fopen("araclar.txt","w");
+				
+				if(file == NULL)
+				{
+					printf("File Not Found\n");
+				}
+	for( int i=0;i<nn;i++)
+	{
+		
+		if(strcmp(plakano,arac1[i].PlakaNo)==0)
+		{
+			continue;
+		}
+		else
+		{
+			fprintf(file,"%s\t%s\t%s\t%s\t%s\t%s\n",arac1[i].Marka,arac1[i].Model,arac1[i].PlakaNo,arac1[i].MotorHacmi,arac1[i].YakýtTürü,arac1[i].aracturu);
+		}	
+		
+	}
+	fclose(file);
+	
+	
+	
+	printf("Kayit silme islemi basariyla tamamlanmistir!!!\nDevam etmek icin bir tusa basiniz!!!");
+	getch();
+}
+void aracgoruntule()//arac listeleme fonksiyonu
+{
+int nn=0;
+	FILE *dosya;
+	dosya=fopen("araclar.txt","r");	
+	system("CLS");
+		if(dosya==NULL)
+			printf("File Not Found!!");
+		else
+		{		
+			while(fscanf(dosya,"%s\t%s\t%s\t%s\t%s\t%s\n",arac1[nn].Marka,arac1[nn].Model,arac1[nn].PlakaNo,arac1[nn].MotorHacmi,arac1[nn].YakýtTürü,arac1[nn].aracturu)!=EOF)
+			{		
+				nn++;
+			}
+		}
+			if(nn ==0)
+	{
+		printf("Kayit Bulunmamaktadir!!!\n");
+	}
+			fclose(dosya);
+			for(int i=0;i<nn;i++)
+	{
+		FILE *file,*file1;
+		file=fopen("yakitturu.txt","r");
+		file1=fopen("aracturu.txt","r");
+		int n=0,m=0;
+		int n1=0,m1=0;
+
+		if(file==NULL)
+			printf("File Not Found!!");
+		else
+		{
+			int flag1=0;
+			int flag2=0;
+			while(fscanf(file,"%s\t\t%s\n",yakitli1[n].id,yakitli1[n].yakit)!=EOF )
+			{
+				if(strcmp(arac1[i].YakýtTürü,yakitli1[n].id)==0)
+				{
+					flag1=1;
+					n1=n;
+				}
+		
+				n++;
+			}
+			while(fscanf(file1,"%s\t\t%s\n",aracturu2[m].id,aracturu2[m].aractu)!=EOF)
+			{
+				if(strcmp(arac1[i].aracturu,aracturu2[m].id)==0)
+				{
+					flag2=1;	
+					m1=m;
+					
+				}
+				m++;
+			}
+			if(flag1==1 && flag2==1)
+			{
+				printf("Arac plaka no:%s\n",arac1[i].PlakaNo);
+				printf("Arac markasi :%s\n",arac1[i].Marka );
+				printf("Arac modeli  :%s\n",arac1[i].Model);
+				printf("Arac Motor Hacmi no:%s\n",arac1[i].MotorHacmi );
+				printf("Arac Yakit Turu:%s\n",yakitli1[n1].yakit);
+				printf("Arac Turu:%s\n",aracturu2[m1].aractu);
+				
+				
+				printf("***************************************************\n\n" );
+			}
+		}
+		fclose(file);
+		fclose(file1);
+
+			}
+	
+	printf("Devam etmek icin bir tusa basiniz\n");
+	getch();	
+		
+}
+void aracguncelle()//arac guncelleme fonksiyonu
+{
+
+int nn=0,sayac=0,sec=0,a=0;
+FILE *dosya;
+dosya=fopen("araclar.txt","r");
+system("CLS");
+if(dosya ==NULL)
+		printf("File Not Found!!");
+else
+{
+	while(fscanf(dosya,"%s\t%s\t%s\t%s\t%s\t%s\n",arac1[nn].Marka,arac1[nn].Model,arac1[nn].PlakaNo,arac1[nn].MotorHacmi,arac1[nn].YakýtTürü,arac1[nn].aracturu)!=EOF)
+{
+nn++;
+}
+fclose(dosya);
+}
+for(;;)
+{
+	system("CLS"); 
+	sec=aracguncelmenu();
+if(sec==1)
+{
+char plaka[11];
+			printf("Degistirmek istediginiz Aracýn Plaka numarasini giriniz:");
+			scanf("%s",&plaka);
+			for(int j=0;j<=nn;j++)
+			{
+				if(strcmp(plaka,arac1[j].PlakaNo)==0)
+				{
+					printf("Yeni plaka numarasýný  giriniz:");
+					scanf("%s",arac1[j].PlakaNo);
+					printf("Plaka Numrasý=%s\n",arac1[j].Marka);
+					a++;
+					aracguncellikaydet(arac1, nn);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+				
+		}
+else if(sec==2)
+{
+char plaka[11];
+			printf("Degistirmek istediginiz Aracýn Plaka numarasini giriniz:");
+			scanf("%s",&plaka);
+			for(int j=0;j<=nn;j++)
+			{
+				if(strcmp(plaka,arac1[j].PlakaNo)==0)
+				{
+					printf("Yeni Arac Markasýný giriniz:");
+					scanf("%s",arac1[j].Marka);
+					printf("Markasý=%s\n",arac1[j].Marka);
+					a++;
+					aracguncellikaydet(arac1, nn);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+				
+		}
+else if(sec==3)
+{
+char plaka[11];
+			printf("Degistirmek istediginiz Aracýn Plaka numarasini giriniz:");
+			scanf("%s",&plaka);
+			for(int j=0;j<=nn;j++)
+			{
+				if(strcmp(plaka,arac1[j].PlakaNo)==0)
+				{
+					printf("Yeni Ara Modelini  giriniz:");
+					scanf("%s",arac1[j].Model);
+					printf("Modeli=%s\n",arac1[j].Model);
+					a++;
+					aracguncellikaydet(arac1, nn);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+				
+		}
+else if(sec==4)
+{
+char plaka[11];
+			printf("Degistirmek istediginiz Aracýn Plaka numarasini giriniz:");
+			scanf("%s",&plaka);
+			for(int j=0;j<=nn;j++)
+			{
+				if(strcmp(plaka,arac1[j].PlakaNo)==0)
+				{
+					printf("Yeni Arac Motor Hacmini giriniz:");
+					scanf("%s",arac1[j].MotorHacmi);
+					printf("Markasý=%s\n",arac1[j].MotorHacmi);
+					a++;
+					aracguncellikaydet(arac1, nn);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+				
+		}
+if(sec==5)
+{
+char plaka[11];
+			printf("Degistirmek istediginiz Aracýn Plaka numarasini giriniz:");
+			scanf("%s",&plaka);
+			for(int j=0;j<=nn;j++)
+			{
+				if(strcmp(plaka,arac1[j].PlakaNo)==0)
+				{
+					printf("Yeni plaka numarasýný  giriniz:");
+					scanf("%s",arac1[j].YakýtTürü);
+					printf("Plaka Numrasý=%s\n",arac1[j].YakýtTürü);
+					a++;
+					aracguncellikaydet(arac1, nn);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+				
+		}
+else if(sec==5)
+{
+char plaka[11];
+			printf("Degistirmek istediginiz Aracýn Plaka numarasini giriniz:");
+			scanf("%s",&plaka);
+			for(int j=0;j<=nn;j++)
+			{
+				if(strcmp(plaka,arac1[j].PlakaNo)==0)
+				{
+					printf("Eklemek Istediginiz Yeni  Arac yakit türünü Seciniz\n1-Benzinli\n2-Dizel\n3-LPG\n4-Elektrikli\n5-Hibrid\n");		
+					scanf("%s",arac1[j].YakýtTürü);
+					printf("Markasý=%s\n",arac1[j].YakýtTürü);
+					a++;
+					aracguncellikaydet(arac1, nn);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+				
+		}
+else if(sec==6)
+{
+char plaka[11];
+			printf("Degistirmek istediginiz Aracýn Plaka numarasini giriniz:");
+			scanf("%s",&plaka);
+			for(int j=0;j<=nn;j++)
+			{
+				if(strcmp(plaka,arac1[j].PlakaNo)==0)
+				{
+					printf("Eklemek Istediginiz Yeni Arac türünü Seciniz\n1-Otomobil\n2-Motorsiklet\n3-Ticari\n4-Hafif Ticari\n");
+					scanf("%s",arac1[j].aracturu);
+					printf("Markasý=%s\n",arac1[j].aracturu);
+					a++;
+					aracguncellikaydet(arac1, nn);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+				
+		}
+else if(sec==7)
+		{
+			printf("Kisler Meüsüne dondunuz!!!");
+			break;
+		}
+		else
+		{
+			printf("Hatali bir secim yaptiniz!!!\nDevam etmek icin bir tusa basiniz\n");
+			getch();
+		}
+}
+
+}
+void aracguncellikaydet(struct AracKayýt arac2[BUFSIZ], int i)//guncelellenen verileri txt ye yazma fonksiyonu
+{
+	FILE *dosya;
+	dosya=fopen("araclar.txt","w");
+	if(dosya ==NULL)
+		printf("File Not Found!!");
+	else
+	{
+		for(int j=0;j<i;j++)
+		{
+			fprintf(dosya,"%s\t%s\t%s\t%s\t%s\t%s\n",arac2[j].Marka,arac2[j].Model,arac2[j].PlakaNo,arac2[j].MotorHacmi,arac2[j].YakýtTürü,arac2[j].aracturu);
+
+
+			
+		}
+		
+	}
+
+}
+bool arackontrol(char plakano[])//bu fonksiyon araclar dosyasýndaki veriler okuyup sahiplere veri ekleriken kosul saglayan verini olup olmadýgýný koturol ediyor 
+{
+	int nn=0;
+	FILE *dosya;
+	dosya=fopen("araclar.txt","r");
+	
+		if(dosya==NULL)
+			printf("File Not Found!!");
+		else
+		{		
+			while(fscanf(dosya,"%s\t%s\t%s\t%s\t%s\t%s\n",arac1[nn].Marka,arac1[nn].Model,arac1[nn].PlakaNo,arac1[nn].MotorHacmi,arac1[nn].YakýtTürü,arac1[nn].aracturu)!=EOF)
+			{
+				if(strcmp(plakano,arac1[nn].PlakaNo)==0)
+				{
+					fclose(dosya);
+					return true;
+				}
+				nn++;
+			}
+
+		}
+	
+	
+	fclose(dosya);	
+	return false;
+}
+bool kisikontrol(char tcno[])//bu fonksiyon kisiler dosyasýndaki veriler okuyup sahiplere veri ekleriken kosul saglayan verini olup olmadýgýný koturol ediyor 
+{
+	int n=0;
+	FILE *dosya;
+	dosya=fopen("kisiler.txt","r");
+	
+		if(dosya==NULL)
+			printf("File Not Found!!");
+		else
+		{		
+			while(fscanf(dosya,"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",kisi1[n].TC,kisi1[n].Ad,kisi1[n].SoyAd,kisi1[n].Tel,kisi1[n].adres1.il,kisi1[n].adres1.mahalle,kisi1[n].adres1.sokak,kisi1[n].adres1.no)!=EOF)
+			{
+				if(strcmp(tcno,kisi1[n].TC)==0)
+				{
+					fclose(dosya);
+					return true;
+				}
+				n++;
+			}
+
+		}
+	
+	fclose(dosya);
+	return false();
+}
+void sahipekle()//sahip ekle fonksiyonu
+{FILE *dosya;
+	
+
+	printf("TC numarasini giriniz ");
+	scanf("%s",&sahipolanlar1.tcno);
+	printf("plaka numarasini giriniz ");
+	scanf("%s",&sahipolanlar1.plakano);
+
+	if(kisikontrol(sahipolanlar1.tcno)==true)
+	{
+		if(arackontrol(sahipolanlar1.plakano)==true)
+		{
+			
+			printf("Tarihi giriniz:");
+			scanf("%s",&sahipolanlar1.tarih);
+			
+			dosya=fopen("sahip.txt","a");
+			
+			if(dosya==NULL)
+				printf("File Not Found!!");
+			else
+			{		
+				fprintf(dosya,"%s\t%s\t%s\n",sahipolanlar1.tcno,sahipolanlar1.plakano,sahipolanlar1.tarih);
+				printf("Kayýt Basarili\n");
+				
+			}
+			fclose(dosya);
+		
+		}
+		else
+			printf("Kisi bulunamadi\n");
+
+	}
+	else
+		printf("Arac bulunamadi\n");
+	
+	printf("Devam etmek icin bir tusa basiniz\n");
+	getch();
+
+	
+}
+void sahipgoruntule()//sahip listelem fonksiyonu
+{
+	int n=0;
+	FILE *dosya;
+	
+	dosya=fopen("sahip.txt","r");
+	
+		if(dosya==NULL)
+			printf("File Not Found!!");
+		else
+		{		
+			while(fscanf(dosya,"%s\t%s\t%s\n",sahipolanlar[n].tcno,sahipolanlar[n].plakano,sahipolanlar[n].tarih)!=EOF)
+			{
+				n++;
+			}
+
+		}
+	if(n ==0)
+	{
+		printf("Kayit Bulunmamaktadir!!!\n");
+	}
+	fclose(dosya);
+	for(int i=0;i<n;i++)
+	{
+		FILE *file;
+		file=fopen("kisiler.txt","r");
+		int nn=0;
+		if(file==NULL)
+			printf("File Not Found!!");
+		else
+		{
+			while(fscanf(file,"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",kisi1[nn].TC,kisi1[nn].Ad,kisi1[nn].SoyAd,kisi1[nn].Tel,kisi1[nn].adres1.il,kisi1[nn].adres1.mahalle,kisi1[nn].adres1.sokak,kisi1[nn].adres1.no)!=EOF)
+			{
+				if(strcmp(sahipolanlar[i].tcno,kisi1[nn].TC)==0)
+				{
+					printf("Ýsim: %s\nSoyisim:%s\nTC No:%s\nPlaka:%S\nTarih:%s\n",kisi1[nn].Ad,kisi1[nn].SoyAd,sahipolanlar[i].tcno,sahipolanlar[i].plakano,sahipolanlar[i].tarih);
+					printf("***************************************************\n\n" );
+				}
+			
+		
+				nn++;
+			}
+		}
+		fclose(file);
+	}
+
+
+	printf("%d\n",n);
+	printf("Devam etmek icin bir tusa basiniz\n");
+	getch();
+	
+}
+void sahipsil()//sahip silme fonksiyonu
+{
+int n=0;
+	FILE *dosya;
+	dosya=fopen("sahip.txt","r");
+
+if(dosya==NULL)
+		printf("File Not Found!!");
+else
+{
+	while(fscanf(dosya,"%s\t%s\t%s\n",sahipolanlar[n].tcno,sahipolanlar[n].plakano,sahipolanlar[n].tarih)!=EOF)
+	{
+	
+	n++;
+	}
+
+}
+fclose(dosya);
+
+
+ char tcno[BUFSIZ];
+	printf("Silmek istediginiz kisinin arac plaka numarasýný giriniz:");
+	scanf("%s",tcno);
+			FILE *file;
+			
+				file=fopen("sahip.txt","w");
+				
+				if(file == NULL)
+				{
+					printf("File Not Found\n");
+				}
+	for( int i=0;i<n;i++)
+	{
+		
+		if(strcmp(tcno,sahipolanlar[i].tcno)==0)
+		{
+			continue;
+		}
+		else
+		{
+			fprintf(dosya,"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",kisi1[i].TC,kisi1[i].Ad,kisi1[i].SoyAd,kisi1[i].Tel,kisi1[i].adres.il,kisi1[i].adres.mahalle,kisi1[i].adres.sokak,kisi1[i].adres.no);
+		}	
+		
+	}
+	fclose(file);
+	
+	
+	
+	printf("Kayit silme islemi basariyla tamamlanmistir!!!\nDevam etmek icin bir tusa basiniz!!!");
+	getch();
+
+}
+void kisisahipsil(char tcno[11])//kisilerden sildigimiz birini sahipler dosyasýnda kayýlý bir veri varsa  bu verileri silme fonksiyonu 
+{
+int n=0;
+	FILE *dosya;
+	dosya=fopen("sahip.txt","r");
+
+if(dosya==NULL)
+		printf("File Not Found!!");
+else
+{
+	while(fscanf(dosya,"%s\t%s\t%s\n",sahipolanlar[n].tcno,sahipolanlar[n].plakano,sahipolanlar[n].tarih)!=EOF)
+	{
+	
+	n++;
+	}
+
+}
+fclose(dosya);	
+	
+			FILE *file;
+			
+				file=fopen("sahip.txt","w");
+				
+				if(file == NULL)
+				{
+					printf("File Not Found\n");
+				}
+	for( int i=0;i<n;i++)
+	{
+		
+		if(strcmp(tcno,sahipolanlar[i].tcno)==0)
+		{
+			continue;
+		}
+		else
+		{
+			fprintf(file,"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",sahipolanlar[i].tcno,sahipolanlar[i].plakano,sahipolanlar[i].tarih);
+		}	
+		
+	}
+	fclose(file);
+
+}
+void aracsahipsil(char plakano[BUFSIZ])//araclardan sildigimiz bir aracý sahipler dosyasýnda kayýlý bir veri varsa  bu verileri silme fonksiyonu 
+{
+int n=0;
+	FILE *dosya;
+	dosya=fopen("sahip.txt","r");
+
+if(dosya==NULL)
+		printf("File Not Found!!");
+else
+{
+	while(fscanf(dosya,"%s\t%s\t%s\n",sahipolanlar[n].tcno,sahipolanlar[n].plakano,sahipolanlar[n].tarih)!=EOF)
+	{
+	
+	n++;
+	}
+
+}
+fclose(dosya);	
+	
+			FILE *file;
+			
+				file=fopen("sahip.txt","w");
+				
+				if(file == NULL)
+				{
+					printf("File Not Found\n");
+				}
+	for( int i=0;i<n;i++)
+	{
+		
+		if(strcmp(plakano,sahipolanlar[i].tcno)==0)
+		{
+			continue;
+		}
+		else
+		{
+			fprintf(file,"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",sahipolanlar[i].tcno,sahipolanlar[i].plakano,sahipolanlar[i].tarih);
+		}	
+		
+	}
+	fclose(file);
+
+
+
+}
+void sahipguncelle()//sahi gunceleme fonksiyonu
+{
+
+int n=0,sec=0,a=0;
+FILE *dosya;
+dosya=fopen("araclar.txt","r");
+if(dosya ==NULL)
+		printf("File Not Found!!");
+else
+{
+	while(fscanf(dosya,"%s\t%s\t%s\n",sahipolanlar[n].tcno,sahipolanlar[n].plakano,sahipolanlar[n].tarih)!=EOF)
+{
+n++;
+}
+fclose(dosya);
+}
+
+for(;;)
+{
+	system("CLS");
+	sec=sahipgunmenu();
+
+if(sec==1)
+{
+char plaka[11];
+			printf("Degistirmek istediginiz kisinin TC numarasini giriniz:");
+			scanf("%s",&plaka);
+			for(int j=0;j<=n;j++)
+			{
+
+				if(strcmp(plaka,sahipolanlar[j].tcno)==0)
+				{
+					printf("Yeni Arac Plaka numarasý giriniz:");
+					scanf("%s",sahipolanlar[BUFSIZ]);
+					if(kisikontrol(sahipolanlar1.tcno)==true)
+						{
+						printf("Tc No=%s\n",sahipolanlar[j].tcno);
+					a++;
+					sahipguncellikaydet(sahipolanlar, n);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+						}
+					
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+				
+		}
+else if(sec==2)
+{
+char plaka[11];
+			printf("Degistirmek istediginiz kisinin TC numarasini giriniz:");
+			scanf("%s",&plaka);
+			for(int j=0;j<=n;j++)
+			{
+
+				if(strcmp(plaka,sahipolanlar[j].plakano)==0)
+				{
+					printf("Yeni Arac  giriniz:");
+					scanf("%s",arac1[j].Marka);
+					if(arackontrol(sahipolanlar1.plakano)==true)
+						{
+							printf("Markasý=%s\n",sahipolanlar[j].plakano);
+					a++;
+					sahipguncellikaydet(sahipolanlar, n);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+						}
+					
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+				
+		}
+else if(sec==3)
+{
+char plaka[11];
+			printf("Degistirmek istediginiz kisinin TC numarasini giriniz:");
+			scanf("%s",&plaka);
+			for(int j=0;j<=n;j++)
+			{
+				if(strcmp(plaka,sahipolanlar[j].tarih)==0)
+				{
+					printf("Yeni Arac Markasýný giriniz:");
+					scanf("%s",sahipolanlar[j].tarih);
+					printf("Markasý=%s\n",sahipolanlar[j].tarih);
+					a++;
+					sahipguncellikaydet(sahipolanlar, n);
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+			}
+			if(a==0) 
+				{
+					printf("kayit bulunamadi!!!\n");
+					printf("Devam etmek icin bir tusa basiniz!!!");
+					getch();
+				}
+				
+		}
+}
+
+}
+void sahipguncellikaydet(struct sahipler sahipolanlar2[BUFSIZ], int i)//guncelellenen verileri txt ye yazma fonksiyonu
+{
+	FILE *dosya;
+	dosya=fopen("sahip.txt","w");
+	if(dosya ==NULL)
+		printf("File Not Found!!");
+	else
+	{
+		for(int j=0;j<i;j++)
+		{
+			fprintf(dosya,"%s\t%s\t%s\n",sahipolanlar2[j].tcno,sahipolanlar2[j].plakano,sahipolanlar2[j].tarih);
+
+
+			
+		}
+		
+	}
+
+}
+void giris()
+{
+	printf(" 	 		__________________\n");
+	printf("                        _/ ||                ~-\n");
+	printf("                      ,/   //       /~-       /  ~-_  ________----------//\n");
+	printf("    -----------------/-----------------\\-------------------____________//\n");
+	printf("   O--------------  /    YILMAZ      ~~^ |     ARACTAKÝP               | ~|\n");
+	printf("   }======{--------\\____________________|_____________________________|  |\n");
+	printf("   \\===== / /~~~\\ \\ \\                   |         ____________________|-~\n");
+	printf("    \\----|  \\___/ ||--------------------'----------|  \\____/ //\n");
+	printf("   ______`.______.'________________________________`._______.'___________\n");
+	printf("\n\n");
+
+	
+}
+
